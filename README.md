@@ -59,8 +59,8 @@ This is a frontend-only college project. Submitted reports are not stored, and a
 ## 👥 Team
 
 - HTML: *Shreyash Kumar*
-- CSS (Layout & Look): *Member 2 name*
-- CSS (Interactive Features): *Member 3 name*
+- CSS (Layout & Look): *Piyush Kumar*
+- CSS (Interactive Features): *Abhinav Katiyar*
 
 ## 📄 License
 
