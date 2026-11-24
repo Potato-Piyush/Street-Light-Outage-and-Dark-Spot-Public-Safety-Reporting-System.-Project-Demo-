@@ -1,0 +1,165 @@
+/* =====================================================
+   STYLE 2 — INTERACTIVE FEATURES  (CSS Member 2)
+   What this file does: the report form, the safety
+   priority indicator, the repair dashboard (stats,
+   progress bars, filter buttons, table) and the
+   "thank you" popup. All interactivity is pure CSS.
+   NOTE: needs style1.css loaded first (it has the colours).
+   ===================================================== */
+
+/* ---------- 1. Report form ---------- */
+.report-form { display: flex; flex-direction: column; gap: 8px; }
+.report-form > label { font-weight: 600; margin-top: 10px; }
+input[type="text"], select, textarea {
+  width: 100%;
+  padding: 12px;
+  background: var(--bg);
+  color: var(--text);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  font-size: 1rem;
+  font-family: inherit;
+}
+/* glow when the user clicks inside a box */
+input[type="text"]:focus, select:focus, textarea:focus {
+  outline: none; border-color: var(--amber);
+  box-shadow: 0 0 0 3px rgba(255, 183, 3, 0.25);
+}
+fieldset { border: none; margin-top: 14px; }
+legend { font-weight: 600; margin-bottom: 8px; }
+
+/* Outage type pills (Completely Dark / Flickering / Damaged Pole) */
+.radio-group { display: flex; flex-wrap: wrap; gap: 10px; }
+.radio-group legend { width: 100%; }
+.pill {
+  background: var(--bg);
+  border: 1px solid var(--border);
+  padding: 10px 16px;
+  border-radius: 999px;
+  cursor: pointer;
+}
+.pill:hover { border-color: var(--amber); }
+.pill:has(input:checked) { background: var(--amber); color: #1a1300; font-weight: 600; }
+
+.report-form .btn { margin-top: 18px; align-self: flex-start; }
+
+/* ---------- 2. Safety priority indicator ---------- */
+/* Hide the real radio buttons; the labels act as buttons */
+.nearby input[type="radio"] { position: absolute; opacity: 0; pointer-events: none; }
+
+.choices { display: flex; flex-wrap: wrap; gap: 10px; }
+.choices label {
+  background: var(--bg);
+  border: 1px solid var(--border);
+  padding: 10px 16px;
+  border-radius: 8px;
+  cursor: pointer;
+}
+.choices label:hover { border-color: var(--amber); }
+
+/* Highlight the chosen label  (:checked + ~ sibling selector) */
+#n-none:checked   ~ .choices label[for="n-none"],
+#n-school:checked ~ .choices label[for="n-school"],
+#n-bus:checked    ~ .choices label[for="n-bus"],
+#n-alley:checked  ~ .choices label[for="n-alley"] {
+  background: var(--amber); color: #1a1300; font-weight: 600; border-color: var(--amber);
+}
+
+/* All indicator boxes are hidden; ONE is shown depending on the choice */
+.indicator { margin-top: 16px; }
+.level {
+  display: none;
+  padding: 16px;
+  border-radius: 10px;
+  border-left: 8px solid;
+}
+.level strong { display: block; font-size: 1.1rem; }
+.level-normal { background: #3a3110; border-color: #facc15; }
+.level-school,
+.level-bus    { background: #3d1a14; border-color: var(--orange); }
+.level-alley  { background: #4a1212; border-color: var(--red); animation: blink 1s infinite alternate; }
+
+#n-none:checked   ~ .indicator .level-normal,
+#n-school:checked ~ .indicator .level-school,
+#n-bus:checked    ~ .indicator .level-bus,
+#n-alley:checked  ~ .indicator .level-alley { display: block; }
+
+@keyframes blink {
+  from { box-shadow: 0 0 0 rgba(239, 68, 68, 0); }
+  to   { box-shadow: 0 0 20px rgba(239, 68, 68, 0.8); }
+}
+
+/* ---------- 3. Dashboard: summary numbers ---------- */
+.stat {
+  background: var(--card-2);
+  border-radius: 12px;
+  padding: 18px; text-align: center;
+  border-bottom: 4px solid var(--amber);
+}
+.stat b { display: block; font-size: 2.2rem; }
+.stat span { color: var(--muted); font-size: 0.9rem; }
+.stat.green { border-color: var(--green); }
+.stat.blue { border-color: var(--blue); }
+.stat.red { border-color: var(--red); }
+
+/* ---------- 4. Dashboard: progress bars ---------- */
+.bar { background: var(--bg); border-radius: 999px; height: 14px; overflow: hidden; flex: 1; }
+.bar span { display: block; height: 100%; background: linear-gradient(90deg, var(--green), #86efac); border-radius: 999px; }
+.bar.big { height: 24px; }
+.ward-row { display: flex; align-items: center; gap: 12px; margin-bottom: 10px; }
+.ward-row em { width: 60px; font-style: normal; color: var(--muted); }
+.ward-row small { width: 50px; text-align: right; color: var(--muted); }
+
+/* ---------- 5. Dashboard: CSS-only filter buttons ---------- */
+.filter-box > input[type="radio"] { position: absolute; opacity: 0; pointer-events: none; }
+.filter-buttons { display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 14px; }
+.filter-buttons label {
+  padding: 8px 18px;
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  cursor: pointer;
+}
+.filter-buttons label:hover { border-color: var(--amber); }
+
+#f-all:checked      ~ .filter-buttons label[for="f-all"],
+#f-pending:checked  ~ .filter-buttons label[for="f-pending"],
+#f-progress:checked ~ .filter-buttons label[for="f-progress"],
+#f-done:checked     ~ .filter-buttons label[for="f-done"] {
+  background: var(--amber); color: #1a1300; font-weight: 600; border-color: var(--amber);
+}
+
+/* Hide table rows that don't match the chosen filter */
+#f-pending:checked  ~ .table-wrap tbody tr:not(.pending),
+#f-progress:checked ~ .table-wrap tbody tr:not(.progress),
+#f-done:checked     ~ .table-wrap tbody tr:not(.done) { display: none; }
+
+/* ---------- 6. Dashboard: table ---------- */
+.table-wrap { overflow-x: auto; }
+table { width: 100%; border-collapse: collapse; min-width: 620px; }
+th, td { padding: 12px; text-align: left; border-bottom: 1px solid var(--border); }
+th { background: var(--card-2); color: var(--amber); }
+tbody tr:hover { background: var(--card-2); }
+
+/* ---------- 7. "Thank you" popup (uses :target) ---------- */
+.overlay {
+  display: none;                       /* hidden normally */
+  position: fixed; inset: 0; z-index: 50;
+  background: rgba(0, 0, 0, 0.75);
+  align-items: center; justify-content: center;
+  padding: 20px;
+}
+.overlay:target { display: flex; }     /* shown when URL ends with #thanks */
+.modal {
+  background: var(--card);
+  border: 2px solid var(--green);
+  border-radius: 14px;
+  padding: 32px; max-width: 420px; text-align: center;
+}
+.modal p { margin: 12px 0 20px; color: var(--muted); }
+.modal .close { display: block; margin-top: 16px; color: var(--muted); text-decoration: underline; }
+
+/* ---------- 8. Responsive rules for these parts ---------- */
+@media (max-width: 520px) {
+  .ward-row em { width: 50px; }
+}

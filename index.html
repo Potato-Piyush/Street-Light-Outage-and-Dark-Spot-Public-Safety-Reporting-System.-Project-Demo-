@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>StreetLight Safety Reporter</title>
+  <link rel="stylesheet" href="style1.css">
+  <link rel="stylesheet" href="style2.css">
+</head>
+<body>
+
+  <!-- ================= HEADER / NAVIGATION ================= -->
+  <header class="site-header">
+    <a class="logo" href="#top">💡 StreetLight<span>Safety</span></a>
+    <nav>
+      <a href="#report">Report</a>
+      <a href="#priority">Priority</a>
+      <a href="#dashboard">Dashboard</a>
+      <a href="#teams">Teams</a>
+      <a href="#helpline" class="nav-call">📞 Helpline</a>
+    </nav>
+  </header>
+
+  <main id="top">
+
+    <!-- ================= HERO ================= -->
+    <section class="hero">
+      <h1>Report a Dark Spot. <em>Keep Our Streets Safe.</em></h1>
+      <p>Broken streetlights cause accidents and street crime after dark.
+         Report a non-working pole in under a minute and track when the
+         municipal electrical team fixes it.</p>
+      <div class="hero-buttons">
+        <a class="btn btn-primary" href="#report">Report an Outage</a>
+        <a class="btn btn-outline" href="#dashboard">View Repair Status</a>
+      </div>
+    </section>
+
+    <!-- ================= 1. REPORT FORM ================= -->
+    <section id="report" class="card-section">
+      <h2>1. Report a Streetlight Outage</h2>
+      <p class="sub">Fields marked * are required.</p>
+
+      <!-- action="#thanks" opens the "thank you" box using the CSS :target trick -->
+      <form action="#thanks" method="get" class="report-form">
+
+        <label for="pole">Pole Number / Street Landmark *</label>
+        <input type="text" id="pole" name="pole" placeholder="e.g. SL-1045 or Near City Mall gate" required>
+
+        <label for="ward">Ward Number *</label>
+        <select id="ward" name="ward" required>
+          <option value="">-- Select ward --</option>
+          <option>Ward 1</option><option>Ward 2</option><option>Ward 3</option>
+          <option>Ward 4</option><option>Ward 5</option><option>Ward 6</option>
+          <option>Ward 7</option><option>Ward 8</option>
+        </select>
+
+        <fieldset class="radio-group">
+          <legend>Outage Type *</legend>
+          <label class="pill"><input type="radio" name="outage" value="dark" required> 🌑 Completely Dark</label>
+          <label class="pill"><input type="radio" name="outage" value="flicker"> ⚡ Flickering</label>
+          <label class="pill"><input type="radio" name="outage" value="damaged"> 🪧 Damaged Pole</label>
+        </fieldset>
+
+        <!-- ===== SAFETY PRIORITY INDICATOR (pure CSS) =====
+             The radio buttons come FIRST, then the labels, then the indicator.
+             CSS selector  #n-school:checked ~ .indicator  shows the matching box. -->
+        <fieldset class="nearby">
+          <legend>What is near this pole? (decides priority)</legend>
+
+          <input type="radio" name="nearby" id="n-none"   value="none" checked>
+          <input type="radio" name="nearby" id="n-school" value="school">
+          <input type="radio" name="nearby" id="n-bus"    value="busstop">
+          <input type="radio" name="nearby" id="n-alley"  value="alley">
+
+          <div class="choices">
+            <label for="n-none">🏠 Normal road</label>
+            <label for="n-school">🏫 School</label>
+            <label for="n-bus">🚌 Bus stop</label>
+            <label for="n-alley">🌒 Dark alleyway</label>
+          </div>
+
+          <div class="indicator">
+            <div class="level level-normal">
+              <strong>🟡 NORMAL PRIORITY</strong>
+              <span>Repair within 72 hours.</span>
+            </div>
+            <div class="level level-school">
+              <strong>🔴 HIGH PRIORITY — Near School</strong>
+              <span>Children walk here. Repair within 24 hours.</span>
+            </div>
+            <div class="level level-bus">
+              <strong>🔴 HIGH PRIORITY — Near Bus Stop</strong>
+              <span>Waiting commuters at risk. Repair within 24 hours.</span>
+            </div>
+            <div class="level level-alley">
+              <strong>🚨 CRITICAL — Dark Alleyway</strong>
+              <span>Highest crime risk. Repair within 12 hours.</span>
+            </div>
+          </div>
+        </fieldset>
+
+        <label for="notes">Extra details (optional)</label>
+        <textarea id="notes" name="notes" rows="3" placeholder="Anything that helps the repair team find the pole..."></textarea>
+
+        <button type="submit" class="btn btn-primary">Submit Report</button>
+      </form>
+    </section>
+
+    <!-- ================= 2. PRIORITY GUIDE ================= -->
+    <section id="priority" class="card-section">
+      <h2>2. How We Decide Priority</h2>
+      <p class="sub">Outages close to vulnerable places are repaired first.</p>
+      <div class="grid-4">
+        <div class="mini critical"><span class="icon">🌒</span><h3>Dark Alleyway</h3><p>Critical<br>12 hours</p></div>
+        <div class="mini high"><span class="icon">🏫</span><h3>Near School</h3><p>High<br>24 hours</p></div>
+        <div class="mini high"><span class="icon">🚌</span><h3>Near Bus Stop</h3><p>High<br>24 hours</p></div>
+        <div class="mini normal"><span class="icon">🏠</span><h3>Normal Road</h3><p>Normal<br>72 hours</p></div>
+      </div>
+    </section>
+
+    <!-- ================= 3. DASHBOARD ================= -->
+    <section id="dashboard" class="card-section">
+      <h2>3. City Repair Status Dashboard</h2>
+      <p class="sub">Reported poles vs repaired poles.</p>
+
+      <!-- summary numbers -->
+      <div class="grid-4">
+        <div class="stat"><b>48</b><span>Total Reported</span></div>
+        <div class="stat green"><b>31</b><span>Repaired</span></div>
+        <div class="stat blue"><b>9</b><span>Repair In Progress</span></div>
+        <div class="stat red"><b>8</b><span>Pending</span></div>
+      </div>
+
+      <!-- overall progress bar -->
+      <h3>Overall repair progress: 65%</h3>
+      <div class="bar big"><span style="width:65%"></span></div>
+
+      <!-- ward-wise bars -->
+      <h3>Ward-wise progress</h3>
+      <div class="ward-row"><em>Ward 1</em><div class="bar"><span style="width:80%"></span></div><small>8 / 10</small></div>
+      <div class="ward-row"><em>Ward 2</em><div class="bar"><span style="width:50%"></span></div><small>4 / 8</small></div>
+      <div class="ward-row"><em>Ward 3</em><div class="bar"><span style="width:75%"></span></div><small>9 / 12</small></div>
+      <div class="ward-row"><em>Ward 4</em><div class="bar"><span style="width:40%"></span></div><small>4 / 10</small></div>
+      <div class="ward-row"><em>Ward 5</em><div class="bar"><span style="width:87%"></span></div><small>7 / 8</small></div>
+
+      <!-- ===== CSS-only filter: click a button to filter the table ===== -->
+      <h3>Pole-by-pole tracker (click to filter)</h3>
+      <div class="filter-box">
+        <input type="radio" name="filter" id="f-all" checked>
+        <input type="radio" name="filter" id="f-pending">
+        <input type="radio" name="filter" id="f-progress">
+        <input type="radio" name="filter" id="f-done">
+
+        <div class="filter-buttons">
+          <label for="f-all">All</label>
+          <label for="f-pending">🔴 Pending</label>
+          <label for="f-progress">🔵 In Progress</label>
+          <label for="f-done">🟢 Repaired</label>
+        </div>
+
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr><th>Pole No.</th><th>Location</th><th>Ward</th><th>Issue</th><th>Priority</th><th>Status</th></tr>
+            </thead>
+            <tbody>
+              <tr class="pending"><td>SL-1045</td><td>Near Govt. School gate</td><td>2</td><td>Completely Dark</td><td>High</td><td><span class="tag t-red">Pending</span></td></tr>
+              <tr class="progress"><td>SL-2210</td><td>Main Bus Stand</td><td>1</td><td>Flickering</td><td>High</td><td><span class="tag t-blue">In Progress</span></td></tr>
+              <tr class="pending"><td>SL-0872</td><td>Back alley, Market Road</td><td>4</td><td>Completely Dark</td><td>Critical</td><td><span class="tag t-red">Pending</span></td></tr>
+              <tr class="done"><td>SL-3301</td><td>Park Road crossing</td><td>3</td><td>Damaged Pole</td><td>Normal</td><td><span class="tag t-green">Repaired</span></td></tr>
+              <tr class="done"><td>SL-1190</td><td>Railway Station Road</td><td>5</td><td>Flickering</td><td>Normal</td><td><span class="tag t-green">Repaired</span></td></tr>
+              <tr class="progress"><td>SL-0455</td><td>Near City Hospital</td><td>3</td><td>Completely Dark</td><td>High</td><td><span class="tag t-blue">In Progress</span></td></tr>
+              <tr class="pending"><td>SL-2764</td><td>Temple Lane</td><td>4</td><td>Damaged Pole</td><td>Normal</td><td><span class="tag t-red">Pending</span></td></tr>
+              <tr class="done"><td>SL-1888</td><td>Girls College Road</td><td>1</td><td>Completely Dark</td><td>High</td><td><span class="tag t-green">Repaired</span></td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= 4. REPAIR TEAMS ================= -->
+    <section id="teams" class="card-section">
+      <h2>4. Municipal Repair Teams</h2>
+      <p class="sub">Live status of electrical teams in the field.</p>
+      <div class="grid-3">
+        <div class="team">
+          <h3>⚙️ Team Alpha</h3>
+          <p>Wards 1 &amp; 2</p>
+          <span class="tag t-blue">On site</span>
+          <p class="small">Working on: SL-2210 (Bus Stand)</p>
+        </div>
+        <div class="team">
+          <h3>⚙️ Team Bravo</h3>
+          <p>Wards 3 &amp; 4</p>
+          <span class="tag t-blue">On site</span>
+          <p class="small">Working on: SL-0455 (City Hospital)</p>
+        </div>
+        <div class="team">
+          <h3>⚙️ Team Charlie</h3>
+          <p>Wards 5 &amp; 6</p>
+          <span class="tag t-green">Available</span>
+          <p class="small">Waiting for next assignment</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= 5. HELPLINE ================= -->
+    <section id="helpline" class="helpline">
+      <h2>📞 Municipal Electrical Helpline</h2>
+      <p>For urgent dangers like a fallen pole or exposed live wires, call the emergency dispatcher directly.</p>
+      <div class="call-buttons">
+        <!-- tel: links open the phone dialer on mobile. Commas add a pause, then the extension is dialled. -->
+        <a class="btn btn-call" href="tel:1800000000">📞 Call Helpline<small>1800-000-000</small></a>
+        <a class="btn btn-emergency" href="tel:1800000000,,101">🚨 Emergency Dispatcher<small>Ext. 101</small></a>
+      </div>
+      <p class="small">On a computer the button opens your phone/Skype app; on a mobile it opens the dialer.</p>
+    </section>
+
+  </main>
+
+  <footer>
+    <p>College Project — Street Light Outage and Dark Spot Public Safety Reporting System</p>
+    <p class="small">Built with HTML &amp; CSS only. Data shown is sample data.</p>
+  </footer>
+
+  <!-- ================= THANK-YOU BOX (shown with :target) ================= -->
+  <div id="thanks" class="overlay">
+    <div class="modal">
+      <h2>✅ Report Submitted!</h2>
+      <p>Thank you for helping keep your ward safe. Our electrical team has been notified.</p>
+      <a class="btn btn-primary" href="#dashboard">Track Repair Status</a>
+      <a class="close" href="#report">Close</a>
+    </div>
+  </div>
+
+</body>
+</html>
